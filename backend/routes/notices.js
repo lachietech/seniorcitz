@@ -5,7 +5,19 @@ const router = Router();
 
 router.get('/', async (_req, res) => {
   const notices = await Notice.find().sort({ postedAt: -1 });
-  res.json(notices);
+
+  // Convert image buffer to base64 if it exists
+  const formatted = notices.map(n => ({
+    _id: n._id,
+    title: n.title,
+    content: n.content,
+    postedAt: n.postedAt,
+    imageUrl: n.image?.data
+      ? `data:${n.image.contentType};base64,${n.image.data.toString('base64')}`
+      : null
+  }));
+
+  res.json(formatted);
 });
 
 router.post('/', async (req, res) => {

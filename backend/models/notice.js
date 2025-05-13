@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
 
 const NoticeSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
-  content: {
-    type: String,
-    required: true
+  title: String,
+  content: String,
+  image: {
+    data: Buffer,
+    contentType: String
   },
   postedAt: {
     type: Date,

@@ -3,6 +3,7 @@ import Admin from '../models/admin.js';
 import Notice from '../models/notice.js';
 import path from 'path';
 import mongoose from 'mongoose';
+import multer from 'multer';
 
 const router = Router();
 const __dirname = import.meta.dirname;
@@ -106,12 +107,49 @@ router.get('/dashboard', async (req, res) => {
   res.sendFile(path.join(__dirname, '../../frontend', 'admin-dashboard.html'));
 });
 
-router.post('/notice', async (req, res) => {
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+router.post('/notice', upload.single('image'), async (req, res) => {
   if (!req.session.admin) return res.status(401).json({ error: 'Unauthorized' });
+
   const { title, content } = req.body;
-  const newNotice = new Notice({ title, content });
+
+  const newNotice = new Notice({
+    title,
+    content,
+    postedAt: new Date()
+  });
+
+  if (req.file) {
+    newNotice.image = {
+      data: req.file.buffer,
+      contentType: req.file.mimetype
+    };
+  }
+
   await newNotice.save();
-  res.json({ success: true });
+  res.status(201).json({ success: true });
+});
+
+router.put('/notice/:id', upload.single('image'), async (req, res) => {
+  if (!req.session.admin) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  const update = { title, content };
+  if (req.file) {
+    update.image = {
+      data: req.file.buffer,
+      contentType: req.file.mimetype
+    };
+  }
+
+  const updated = await Notice.findByIdAndUpdate(id, update, { new: true });
+  if (!updated) return res.status(404).json({ error: 'Notice not found' });
+
+  res.json({ success: true, updated });
 });
 
 export default router;

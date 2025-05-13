@@ -31,6 +31,16 @@
     .section-heading {
       color: #2c3e50;
     }
+    .card-body {
+      background-color: #fffefc;
+    }
+    .card {
+      border: 1px solid #e3e3e3;
+      border-radius: 0.5rem;
+    }
+    img.img-fluid {
+      border: 1px solid #ddd;
+    }
   </style>
 </head>
 <body>
@@ -153,8 +163,18 @@
       board.innerHTML = '';
       data.forEach(n => {
         const div = document.createElement('div');
-        div.classList.add('card', 'my-2');
-        div.innerHTML = `<div class="card-body"><h5>${n.title}</h5><p>${n.content}</p><small class="text-muted">Posted: ${new Date(n.postedAt).toLocaleString()}</small></div>`;
+        div.className = 'card my-4 border-0 shadow-sm rounded-3';
+        div.innerHTML = `
+          <div class="card-body p-4">
+            <h4 class="fw-bold text-dark mb-2">${n.title}</h4>
+            <div style="white-space: pre-wrap;" class="mb-3">${n.content}</div>
+            ${n.imageUrl ? `
+              <div class="text-center mb-3">
+                <img src="${n.imageUrl}" class="img-fluid rounded shadow-sm" style="max-width: 100%; height: auto;" alt="Notice Image" />
+              </div>` : ''}
+            <div class="text-end text-muted small">Posted: ${new Date(n.postedAt).toLocaleString()}</div>
+          </div>
+        `;
         board.appendChild(div);
       });
     }
