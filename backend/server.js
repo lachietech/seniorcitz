@@ -9,9 +9,6 @@ import noticesRouter from './routes/notices.js';
 import authRouter from './routes/auth.js';
 import cookieParser from 'cookie-parser';
 
-
-
-
 dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);

@@ -8,8 +8,6 @@ const router = Router();
 const __dirname = import.meta.dirname;
 
 
-
-
 router.delete('/notice/:id', async (req, res) => {
   if (!req.session.admin) return res.status(401).json({ error: 'Unauthorized' });
 
@@ -28,16 +26,46 @@ router.get('/login', (req, res) => {
       <!DOCTYPE html>
       <html lang="en">
       <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Admin Login - Golden Horizons</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Login – Sandgate Seniors</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+          body {
+            background-color: #fffaf5;
+            font-family: 'Segoe UI', sans-serif;
+          }
+          .navbar {
+            background-color: #2c3e50;
+          }
+          .navbar-brand, .nav-link {
+            color: white !important;
+          }
+          .card {
+            background-color: #ffffff;
+            border: 1px solid #e3e3e3;
+          }
+        </style>
       </head>
-      <body class="bg-light">
+      <body>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+          <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="/">Sandgate Seniors</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
         <div class="container mt-5">
           <h2 class="text-center mb-4">Admin Login</h2>
           ${message ? `<div class="alert alert-info">${message}</div>` : ''}
-          <form method="POST" action="/admin/login" class="card p-4 shadow-sm">
+          <form method="POST" action="/admin/login" class="card p-4 shadow-sm mx-auto">
             <div class="mb-3">
               <label for="username" class="form-label">Username</label>
               <input type="text" name="username" id="username" class="form-control" required />
@@ -49,6 +77,8 @@ router.get('/login', (req, res) => {
             <button type="submit" class="btn btn-primary w-100">Login</button>
           </form>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
       </body>
       </html>
     `);
