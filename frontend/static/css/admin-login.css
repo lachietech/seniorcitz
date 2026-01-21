@@ -1,0 +1,14 @@
+body {
+    background-color: #fffaf5;
+    font-family: 'Segoe UI', sans-serif;
+}
+.navbar {
+    background-color: rgb(100, 100, 100);
+}
+.navbar-brand, .nav-link {
+    color: white !important;
+}
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+}
