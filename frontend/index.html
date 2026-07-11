@@ -8,146 +8,106 @@
   <link rel="icon" href="/static/mainphoto.png" type="image/png">
   <title>Sandgate & District Senior Citizens Centre</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: rgb(255, 255, 255);
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .navbar {
-      background-color: rgb(100, 100, 100);
-    }
-    .navbar-brand, .nav-link {
-      color: rgb(255, 255, 255);
-    }
-    .hero {
-      background: linear-gradient(to bottom, rgb(100, 100, 100), rgb(200, 200, 200));
-      color: rgb(255, 255, 255);
-      padding: 80px 0;
-      text-align: center;
-    }
-    .footer {
-      background: linear-gradient(to top, rgb(223, 223, 223), rgb(255, 255, 255));
-      padding: 20px;
-      text-align: center;
-      color: rgb(2, 2, 2);
-    }
-    .section-heading {
-      color: rgb(48, 48, 48);
-    }
-    .card-body {
-      background-color: rgb(245, 245, 245);
-    }
-    .card {
-      border: 2px solid #9c9c9c;
-    }
-    img.img-fluid {
-      border: 1px solid #ddd;
-    }
-  </style>
+  <link rel="stylesheet" href="/static/css/site.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg fixed-top site-nav">
     <div class="container">
-      <a class="navbar-brand fw-bold fs-4" href="/">Sandgate Seniors</a>
+      <a class="navbar-brand fw-bold" href="/">Sandgate Seniors</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mainNavbar">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="#noticeboard">Noticeboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="#schedule">Timetable</a></li>
+          <li class="nav-item"><a class="nav-link" href="#noticeboard">Notices</a></li>
           <li class="nav-item"><a class="nav-link" href="/admin/login">Admin</a></li>
         </ul>
+        <a class="powered-by-logo powered-by-mobile" href="https://nielseninnovations.com" target="_blank" rel="noopener noreferrer" aria-label="Powered by Nielsen Innovations">
+          <span class="powered-by-text">Powered by</span>
+          <span class="powered-by-name">Nielsen Innovations</span>
+        </a>
       </div>
     </div>
+    <a class="powered-by-logo powered-by-desktop" href="https://nielseninnovations.com" target="_blank" rel="noopener noreferrer" aria-label="Powered by Nielsen Innovations">
+      <span class="powered-by-text">Powered by</span>
+      <span class="powered-by-name">Nielsen Innovations</span>
+    </a>
   </nav>
 
-  <section class="hero">
-    <div class="container">
-      <h1 class="display-4 fw-bold">Welcome to the Sandgate & District Senior Citizens Centre</h1>
-    </div>
-  </section>
-
-  <div class="container text-center">
-    <div class="row justify-content-between">
-      <div class="col-lg-5 ">
-        <div class="about-img my-5">
-          <img src="/static/mainphoto.png" class="img-fluid rounded shadow-sm" alt="Sandgate Senior Citizens" style="max-width: 100%; height: auto;">
-        </div>
+  <header class="hero">
+    <div class="container hero-layout">
+      <div class="hero-photo-frame">
+        <img src="/static/mainphoto.png" class="hero-photo" alt="Sandgate Senior Citizens Centre">
       </div>
-      <div class="col-lg-7">
-        <div class="about-descr text-justified mx-4 ">
-          <section class="container my-5" id="about">
-            <h2 class="section-heading">About Us</h2>
-            <p class="fs-5">Established in the heart of Sandgate, our Senior Citizens Centre has been a place of friendship, fun, and community since 1952. We provide a supportive and inclusive space where older adults can stay active, social, and engaged through a variety of programs and services.</p>
-          </section>
-          <section class="container my-5" id="contact">
-            <h2 class="section-heading">Contact Us</h2>
-            <p class="fs-5">We’re located at 20 Seymour St, Sandgate QLD. Feel free to drop in, or give us a call at (07) 3269 4454 during opening hours!.</p>
-          </section>
+      <div class="hero-content">
+        <p class="hero-kicker">Serving Sandgate since 1952</p>
+        <h1>Sandgate & District Senior Citizens Centre</h1>
+        <p class="hero-copy">A welcoming place for friendship, activities, meals, music, and community connection.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#schedule">View Timetable</a>
+          <a class="btn btn-light btn-lg" href="#contact">Contact Us</a>
         </div>
       </div>
     </div>
-  </div>
-  <section class="container my-5" id="schedule">
-    <h2 class="section-heading">Weekly Schedule</h2>
-    <div class="table-responsive">
-      <table class="table table-bordered table-striped">
-        <thead class="table-light">
-          <tr>
-            <th>Day</th>
-            <th>Hours</th>
-            <th>Activities</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Monday</td>
-            <td>8:30 am - 4:30 pm</td>
-            <td>BINGO, Canteen, Bridge</td>
-          </tr>
-          <tr>
-            <td>Tuesday</td>
-            <td>8:30 am - 4:30 pm</td>
-            <td>Mahjong, Excercise Class, Table Tennis</td>
-          </tr>
-          <tr>
-            <td>Wednesday</td>
-            <td>8:30 am - 4:30 pm</td>
-            <td>Morning Tea, Concert, Raffle, Lunch</td>
-          </tr>
-          <tr>
-            <td>Thursday</td>
-            <td>8:30 am - 4:30 pm</td>
-            <td>Excercise Class, Table Tennis</td>
-          </tr>
-          <tr>
-            <td>Friday</td>
-            <td>8:30 am - 4:30 pm</td>
-            <td>Craft</td>
-          </tr>
-          <tr>
-            <td>Saturday</td>
-            <td>8:30 am - 4:30 pm</td>
-            <td>BINGO, Canteen</td>
-          </tr>
-          <tr>
-            <td>Sunday</td>
-            <td>Closed</td>
-            <td>Closed</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+  </header>
 
-  <section class="container my-5" id="noticeboard">
-    <h2 class="section-heading">Noticeboard</h2>
-    <div id="noticeboard-posts"></div>
-  </section>
+  <main>
+    <section class="section about-section" id="about">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <img src="/static/oldies.png" class="feature-img" alt="Sandgate seniors enjoying time together">
+          </div>
+          <div class="col-lg-6">
+            <p class="section-kicker">About us</p>
+            <h2>Good company, regular activities, and a familiar local welcome.</h2>
+            <p class="lead">Established in the heart of Sandgate, our Senior Citizens Centre has been a place of friendship, fun, and community since 1952. We provide a supportive and inclusive space where older adults can stay active, social, and engaged through a variety of programs and services.</p>
+            <div class="contact-strip" id="contact">
+              <div>
+                <span>Visit</span>
+                <strong>20 Seymour St, Sandgate QLD</strong>
+              </div>
+              <div>
+                <span>Call</span>
+                <strong>(07) 3269 4454</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section timetable-section" id="schedule">
+      <div class="container">
+        <div class="section-title">
+          <p class="section-kicker">Weekly timetable</p>
+          <h2>What is on this week</h2>
+        </div>
+        <div id="schedule-list" class="schedule-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section notice-section" id="noticeboard">
+      <div class="container">
+        <div class="section-title">
+          <p class="section-kicker">Noticeboard</p>
+          <h2>Latest centre updates</h2>
+        </div>
+        <div id="noticeboard-posts" class="notice-grid" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
-    <p>&copy; 2025 Sandgate & District Senior Citizens Centre</p>
+    <div class="container footer-content">
+      <p>&copy; 2026 Sandgate & District Senior Citizens Centre</p>
+      <a class="powered-by-logo footer-powered" href="https://nielseninnovations.com" target="_blank" rel="noopener noreferrer" aria-label="Powered by Nielsen Innovations">
+        <span class="powered-by-text">Powered by</span>
+        <span class="powered-by-name">Nielsen Innovations</span>
+      </a>
+    </div>
   </footer>
 
   <script src="/js/index.js"></script>

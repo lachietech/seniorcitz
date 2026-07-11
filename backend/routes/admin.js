@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import Admin from '../models/admin.js';
 import Notice from '../models/notice.js';
+import Timetable from '../models/timetable.js';
 import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
@@ -19,73 +20,35 @@ router.delete('/notice/:id', async (req, res) => {
   res.json({ success: true });
 });
 
+router.put('/timetable', async (req, res) => {
+  if (!req.session.admin) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { entries } = req.body;
+  if (!Array.isArray(entries) || entries.length === 0) {
+    return res.status(400).json({ error: 'Timetable entries are required' });
+  }
+
+  const cleanEntries = entries.map(entry => ({
+    day: String(entry.day || '').trim(),
+    hours: String(entry.hours || '').trim(),
+    activities: String(entry.activities || '').trim()
+  }));
+
+  if (cleanEntries.some(entry => !entry.day || !entry.hours || !entry.activities)) {
+    return res.status(400).json({ error: 'Every timetable row needs a day, hours, and activities' });
+  }
+
+  const timetable = await Timetable.findOneAndUpdate(
+    {},
+    { entries: cleanEntries, updatedAt: new Date() },
+    { new: true, upsert: true, setDefaultsOnInsert: true }
+  );
+
+  res.json({ success: true, entries: timetable.entries });
+});
+
 router.get('/login', (req, res) => {
-    const message = req.cookies?.flash || '';
-    res.clearCookie('flash'); // clear after showing
-  
-    res.send(`
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Welcome to the Sandgate Senior Citizens Page - Come and get to know us!" name="description">
-        <meta content="Sandgate Senior Citizens, page, senior, sandgate, senior citizens, Sandgate & District Senior Citizens Centre" name="keywords">
-        <link rel="icon" href="/static/mainphoto.png" type="image/png">
-        <title>Sandgate & District Senior Citizens Centre</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-          body {
-            background-color:rgb(253, 253, 253);
-            font-family: 'Segoe UI', sans-serif;
-          }
-          .navbar {
-            background-color: rgb(100, 100, 100);
-          }
-          .navbar-brand, .nav-link {
-            color: white !important;
-          }
-          .card {
-            background-color: #ffffff;
-            border: 1px solid #e3e3e3;
-          }
-        </style>
-      </head>
-      <body>
-        <nav class="navbar navbar-expand-lg navbar-dark">
-          <div class="container">
-            <a class="navbar-brand fw-bold fs-4" href="/">Sandgate Seniors</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNavbar">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-        <div class="container mt-5">
-          <h2 class="text-center mb-4">Admin Login</h2>
-          ${message ? `<div class="alert alert-info">${message}</div>` : ''}
-          <form method="POST" action="/admin/login" class="card p-4 shadow-sm mx-auto">
-            <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" name="username" id="username" class="form-control" required />
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" name="password" id="password" class="form-control" required />
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-          </form>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-      </body>
-      </html>
-    `);
+  res.sendFile(path.join(__dirname, '../../frontend', 'admin-login.html'));
 });
 
 router.post('/logout', (req, res) => {
@@ -102,7 +65,8 @@ router.post('/login', async (req, res) => {
     req.session.admin = admin._id;
     return res.redirect('/admin/dashboard');
   }
-  res.status(401).send('Invalid credentials');
+  res.cookie('flash', 'Invalid username or password.', { maxAge: 5000, httpOnly: false });
+  res.redirect('/admin/login');
 });
 
 router.get('/dashboard', async (req, res) => {

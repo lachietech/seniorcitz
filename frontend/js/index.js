@@ -1,23 +1,86 @@
+const defaultTimetable = [
+  { day: 'Monday', hours: '8:30 am - 4:30 pm', activities: 'BINGO, Canteen, Bridge' },
+  { day: 'Tuesday', hours: '8:30 am - 4:30 pm', activities: 'Mahjong, Exercise Class, Table Tennis' },
+  { day: 'Wednesday', hours: '8:30 am - 4:30 pm', activities: 'Morning Tea, Concert, Raffle, Lunch' },
+  { day: 'Thursday', hours: '8:30 am - 4:30 pm', activities: 'Exercise Class, Table Tennis' },
+  { day: 'Friday', hours: '8:30 am - 4:30 pm', activities: 'Craft' },
+  { day: 'Saturday', hours: '8:30 am - 4:30 pm', activities: 'BINGO, Canteen' },
+  { day: 'Sunday', hours: 'Closed', activities: 'Closed' }
+];
+
+function escapeHtml(value = '') {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatPostDate(value) {
+  const date = new Date(value);
+  return new Intl.DateTimeFormat('en-AU', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(date);
+}
+
+async function loadTimetable() {
+  const schedule = document.getElementById('schedule-list');
+  try {
+    const res = await fetch('/timetable');
+    const data = res.ok ? await res.json() : defaultTimetable;
+    renderTimetable(data.length ? data : defaultTimetable);
+  } catch (_error) {
+    renderTimetable(defaultTimetable);
+  }
+
+  function renderTimetable(entries) {
+    schedule.innerHTML = entries.map(entry => {
+      const isClosed = entry.hours.toLowerCase().includes('closed') || entry.activities.toLowerCase().includes('closed');
+      return `
+        <article class="schedule-card ${isClosed ? 'closed' : ''}">
+          <span>${escapeHtml(entry.hours)}</span>
+          <h3>${escapeHtml(entry.day)}</h3>
+          <p>${escapeHtml(entry.activities)}</p>
+        </article>
+      `;
+    }).join('');
+  }
+}
+
 async function loadNotices() {
+  const board = document.getElementById('noticeboard-posts');
+
+  try {
     const res = await fetch('/notices');
     const data = await res.json();
-    const board = document.getElementById('noticeboard-posts');
     board.innerHTML = '';
-    data.forEach(n => {
-    const div = document.createElement('div');
-    div.className = `card rounded-3 my-4 shadow-sm`;
-    div.innerHTML = `
-        <div class="card-body p-4">
-        <h4 class="fw-bold text-dark mb-2">${n.title}</h4>
-        <div style="white-space: pre-wrap;" class="mb-3">${n.content}</div>
-        ${n.imageUrl ? `
-            <div class="text-center mb-3">
-            <img src="${n.imageUrl}" class="img-fluid rounded shadow-sm" style="max-width: 100%; height: auto;" alt="Notice Image" />
-            </div>` : ''}
-        <div class="text-end text-muted small">Posted: ${new Date(n.postedAt).toLocaleString()}</div>
+
+    if (!data.length) {
+      board.innerHTML = '<div class="empty-state">No notices have been posted yet.</div>';
+      return;
+    }
+
+    data.forEach(notice => {
+      const card = document.createElement('article');
+      card.className = 'notice-card';
+      card.innerHTML = `
+        ${notice.imageUrl ? `<img src="${notice.imageUrl}" alt="Notice image">` : ''}
+        <div class="notice-body">
+          <span class="notice-date">Posted ${formatPostDate(notice.postedAt)}</span>
+          <h3>${escapeHtml(notice.title)}</h3>
+          <p>${escapeHtml(notice.content)}</p>
         </div>
-    `;
-    board.appendChild(div);
+      `;
+      board.appendChild(card);
     });
+  } catch (_error) {
+    board.innerHTML = '<div class="empty-state">Notices could not be loaded right now.</div>';
+  }
 }
+
+loadTimetable();
 loadNotices();
