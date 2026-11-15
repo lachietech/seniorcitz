@@ -1,27 +1,27 @@
 {
   "name": "sandgate-senior-citezens-page",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon backend/server.js",
-    "start": "node backend/server.js"
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "start": "vite preview --host 127.0.0.1",
+    "test": "npm run build && playwright test",
+    "test:dev": "playwright test --config playwright.dev.config.js"
   },
   "author": "Lachlan Nielsen",
   "type": "module",
   "license": "ISC",
-  "description": "",
+  "description": "Static React website for Sandgate Seniors, powered by Nielsen Innovations APIs",
+  "engines": {
+    "node": "^22.12.0 || >=24.0.0"
+  },
   "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "express-session": "^1.18.2",
-    "mongoose": "^8.14.2",
-    "multer": "^2.0.2",
-    "path": "^0.12.7"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@playwright/test": "^1.64.1",
+    "@vitejs/plugin-react": "^6.1.2",
+    "vite": "^8.3.5"
   }
 }

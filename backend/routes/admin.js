@@ -2,12 +2,10 @@ import { Router } from 'express';
 import Admin from '../models/admin.js';
 import Notice from '../models/notice.js';
 import Timetable from '../models/timetable.js';
-import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
 
 const router = Router();
-const __dirname = import.meta.dirname;
 
 
 router.delete('/notice/:id', async (req, res) => {
@@ -47,10 +45,6 @@ router.put('/timetable', async (req, res) => {
   res.json({ success: true, entries: timetable.entries });
 });
 
-router.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend', 'admin-login.html'));
-});
-
 router.post('/logout', (req, res) => {
     res.cookie('flash', 'Logged out successfully.', { maxAge: 5000, httpOnly: false });
     req.session.destroy(() => {
@@ -67,11 +61,6 @@ router.post('/login', async (req, res) => {
   }
   res.cookie('flash', 'Invalid username or password.', { maxAge: 5000, httpOnly: false });
   res.redirect('/admin/login');
-});
-
-router.get('/dashboard', async (req, res) => {
-  if (!req.session.admin) return res.redirect('/admin/login');
-  res.sendFile(path.join(__dirname, '../../frontend', 'admin-dashboard.html'));
 });
 
 const storage = multer.memoryStorage();
