@@ -8,7 +8,9 @@ Use Node.js 22.12+ or 24+. Run `npm ci`, then `npm run dev`. Set public override
 
 Run `npm run build` and publish **only `dist/`**. No Sandgate Node server or database is required. `npm start` is a local static preview.
 
-The build includes CSS, images, three HTML entry points, directory indexes for `/admin/login/` and `/admin/dashboard/`, and a Netlify-compatible `_redirects` file. Configure other hosts to rewrite `/admin/login` to `/admin-login.html` and `/admin/dashboard` to `/admin-dashboard.html`. Serve `/` from `index.html`, retaining direct `.html` URLs. Never rewrite API or missing asset requests to HTML.
+The build includes locally bundled Bootstrap, CSS, images, three HTML entry points, directory indexes for `/admin/login/` and `/admin/dashboard/`, and a Netlify-compatible `_redirects` file. Configure other hosts to rewrite `/admin/login` to `/admin-login.html` and `/admin/dashboard` to `/admin-dashboard.html`. Serve `/` from `index.html`, retaining direct `.html` URLs. Never rewrite API or missing asset requests to HTML.
+
+The colour palette and typography are defined in `frontend/static/css/brand.css`. The site uses a gold text wordmark and a simple lettermark favicon until the official logo is supplied. The homepage uses the original welcome photo in the blue hero, with canteen and mural photos in the combined About section. The slogan is "Live! It! Up!" in gold. `Style Script` is bundled locally for the slogan, with its licence in `frontend/static/fonts/OFL.txt`; browsers use a cursive fallback when it is unavailable. The content below the hero shares a light background with soft blue and gold accents.
 
 Requests go directly to the deployed Nielsen API by default. Set `VITE_SENIOR_CITZ_API_URL` to another reachable API URL when needed, then rebuild.
 
@@ -16,7 +18,7 @@ Requests go directly to the deployed Nielsen API by default. Set `VITE_SENIOR_CI
 
 The browser calls Nielsen's Sandgate API for notices, timetable and administrator actions. The API must allow the site's deployed origin and support HTTPS cookies for administrator sessions. Cross-site cookies may be blocked; a same-site API hostname or reverse proxy can help. An HTML rewrite cannot proxy API requests.
 
-The contact form sends enquiries to the `sandgateseniors` Konnect inbox. VisitPulse records page views for that account when enabled. Configure the deployed origin in the external services as needed. If hosting sets a CSP, allow the API origins in `connect-src`, Bootstrap CDN resources, and `data:`/`blob:` notice images and previews.
+The contact form sends enquiries to the `sandgateseniors` Konnect inbox. VisitPulse records page views for that account when enabled. Configure the deployed origin in the external services as needed. If hosting sets a CSP, allow the API origins in `connect-src` and `data:`/`blob:` notice images and previews.
 
 ## Privacy and failures
 

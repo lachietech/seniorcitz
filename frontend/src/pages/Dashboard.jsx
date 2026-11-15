@@ -110,17 +110,17 @@ function DashboardContent() {
               <span className="powered-by-name">Nielsen Innovations</span>
             </a>
           </div>
+          <a
+            className="powered-by-logo powered-by-desktop"
+            href="https://nielseninnovations.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Powered by Nielsen Innovations"
+          >
+            <span className="powered-by-text">Powered by</span>
+            <span className="powered-by-name">Nielsen Innovations</span>
+          </a>
         </div>
-        <a
-          className="powered-by-logo powered-by-desktop"
-          href="https://nielseninnovations.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Powered by Nielsen Innovations"
-        >
-          <span className="powered-by-text">Powered by</span>
-          <span className="powered-by-name">Nielsen Innovations</span>
-        </a>
       </nav>
 
       <header className="admin-hero">

@@ -63,28 +63,8 @@ export default function Home() {
                 </a>
               </li>
             </ul>
-            <a
-              className="powered-by-logo powered-by-mobile"
-              href="https://nielseninnovations.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Powered by Nielsen Innovations"
-            >
-              <span className="powered-by-text">Powered by</span>
-              <span className="powered-by-name">Nielsen Innovations</span>
-            </a>
           </div>
         </div>
-        <a
-          className="powered-by-logo powered-by-desktop"
-          href="https://nielseninnovations.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Powered by Nielsen Innovations"
-        >
-          <span className="powered-by-text">Powered by</span>
-          <span className="powered-by-name">Nielsen Innovations</span>
-        </a>
       </nav>
 
       <header className="hero">
@@ -93,20 +73,24 @@ export default function Home() {
             <img
               src="/static/mainphoto.png"
               className="hero-photo"
-              alt="Sandgate Senior Citizens Centre"
+              alt="Entrance to Sandgate and District Senior Citizens Centre"
+              width="676"
+              height="453"
+              fetchPriority="high"
             />
           </div>
           <div className="hero-content">
             <p className="hero-kicker">Serving Sandgate since 1952</p>
             <h1>Sandgate & District Senior Citizens Centre</h1>
+            <p className="hero-slogan">Live It Up!</p>
             <p className="hero-copy">
               A welcoming place for friendship, activities, meals, music, and community connection.
             </p>
             <div className="hero-actions">
-              <a className="btn btn-primary btn-lg" href="#schedule">
+              <a className="btn btn-primary btn-lg hero-btn-primary" href="#schedule">
                 View Timetable
               </a>
-              <a className="btn btn-light btn-lg" href="#contact">
+              <a className="btn btn-primary btn-lg hero-btn-secondary" href="#contact">
                 Contact Us
               </a>
             </div>
@@ -114,10 +98,10 @@ export default function Home() {
         </div>
       </header>
 
-      <main>
+      <main className="home-main">
         <section className="section about-section" id="about">
           <div className="container">
-            <div className="row align-items-center g-5">
+            <div className="row align-items-center g-4 g-lg-5">
               <div className="col-lg-6">
                 <img
                   src="/static/oldies.png"
@@ -144,6 +128,32 @@ export default function Home() {
                     <strong>(07) 3269 4454</strong>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="about-gallery" aria-labelledby="venue-title">
+              <div className="venue-gallery">
+                <figure className="venue-photo">
+                  <img
+                    src="/static/canteen.jpg"
+                    alt="The canteen and seating area inside Sandgate Senior Citizens Centre"
+                    width="4032"
+                    height="3024"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>Our canteen</figcaption>
+                </figure>
+                <figure className="venue-photo">
+                  <img
+                    src="/static/mural.jpg"
+                    alt="Sandgate Senior Citizens Centre mural on the outside wall"
+                    width="4032"
+                    height="3024"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <figcaption>The centre mural</figcaption>
+                </figure>
               </div>
             </div>
           </div>

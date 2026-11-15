@@ -1,4 +1,7 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import '../static/css/brand.css';
 import { createRoot } from 'react-dom/client';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
