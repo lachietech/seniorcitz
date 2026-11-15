@@ -32,14 +32,17 @@ export default function Contact() {
     }
   }
   return (
-    <section className="section about-section" id="contact">
-      <div className="container">
-        <div className="section-title">
+    <section className="section contact-section" id="contact">
+      <div className="container contact-layout">
+        <div className="section-title contact-intro">
           <p className="section-kicker">Get in touch</p>
           <h2>Contact us</h2>
           <p>
-            Ask about activities, membership or visiting the centre. You can also call (07) 3269
-            4454.
+            Ask about activities, membership or visiting the centre. We would be glad to hear from
+            you.
+          </p>
+          <p className="contact-phone">
+            Prefer to talk? <a href="tel:+61732694454">Call (07) 3269 4454</a>
           </p>
         </div>
         <form onSubmit={submit} className="contact-form" aria-busy={pending}>

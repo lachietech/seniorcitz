@@ -69,15 +69,35 @@ async function fixture(page, options = {}) {
 
 test('static homepage, contact destination, duplicate guard and analytics', async ({ page }) => {
   const state = await fixture(page);
+  await page.clock.install();
   await page.goto('/');
   await expect(page.locator('.schedule-card')).toHaveCount(7);
-  await expect(page.getByText('Live! It! Up!', { exact: true })).toBeVisible();
+  await expect(page.getByText('Live It Up!', { exact: true })).toBeVisible();
   await expect(page.locator('.navbar-brand')).toHaveCSS('color', 'rgb(252, 223, 3)');
-  for (const name of ['mainphoto.png', 'mural.jpg', 'canteen.jpg']) {
-    const photo = page.locator(`img[src="/static/${name}"]`);
-    await photo.scrollIntoViewIfNeeded();
-    await expect.poll(() => photo.evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
+  const heroPhoto = page.locator('img[src="/static/mainphoto.png"]');
+  await expect.poll(() => heroPhoto.evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
+  const carousel = page.getByRole('region', { name: 'About Sandgate Seniors' });
+  const carouselPhoto = carousel.locator('img');
+  for (const [name, subtitle] of [
+    ['oldies.png', 'Friendship and good company'],
+    ['canteen.jpg', 'A place to pause and catch up'],
+    ['mural.jpg', 'Proudly part of Sandgate'],
+  ]) {
+    await expect(carouselPhoto).toHaveAttribute('src', `/static/${name}`);
+    await expect(carousel.getByRole('heading', { name: subtitle })).toBeVisible();
+    await expect
+      .poll(() => carouselPhoto.evaluate((image) => image.naturalWidth))
+      .toBeGreaterThan(0);
+    await page.clock.fastForward(5000);
   }
+  await expect(carouselPhoto).toHaveAttribute('src', '/static/oldies.png');
+  await expect(carousel.getByRole('button')).toHaveCount(0);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.clock.fastForward(10000);
+  await expect(carouselPhoto).toHaveAttribute('src', '/static/oldies.png');
+  await expect(carousel).toBeHidden();
+  await expect(page.locator('.about-static-card')).toHaveCount(3);
+  await expect(page.locator('.about-static-card').last()).toBeVisible();
   await expect.poll(() => state.events.length).toBe(1);
   expect(state.events[0].username).toBe('sandgateseniors');
   expect(state.contacts).toHaveLength(0);

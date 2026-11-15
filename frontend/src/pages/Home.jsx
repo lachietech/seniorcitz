@@ -2,10 +2,49 @@ import { useEffect, useState } from 'react';
 import { fetchTimetable, formatPostDate, request } from '../api.js';
 import Contact from '../components/Contact.jsx';
 
+const aboutSlides = [
+  {
+    image: '/static/oldies.png',
+    alt: 'Sandgate seniors enjoying time together',
+    subtitle: 'Friendship and good company',
+    description:
+      'Since 1952, the centre has been a welcoming place for older adults to make friends, stay active, and enjoy time together.',
+  },
+  {
+    image: '/static/canteen.jpg',
+    alt: 'The canteen and seating area inside Sandgate Senior Citizens Centre',
+    subtitle: 'A place to pause and catch up',
+    description:
+      'Our canteen and shared spaces make it easy to enjoy a conversation, a cup of tea, or a break between activities.',
+  },
+  {
+    image: '/static/mural.jpg',
+    alt: 'Sandgate Senior Citizens Centre mural on the outside wall',
+    subtitle: 'Proudly part of Sandgate',
+    description:
+      'The centre mural celebrates the local community and the connections that have grown here over many years.',
+  },
+];
+
 export default function Home() {
   const [entries, setEntries] = useState([]);
   const [notices, setNotices] = useState(null);
   const [noticeError, setNoticeError] = useState(false);
+  const [activeAboutSlide, setActiveAboutSlide] = useState(0);
+  const [aboutPaused, setAboutPaused] = useState(false);
+  const aboutSlide = aboutSlides[activeAboutSlide];
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      if (
+        !aboutPaused &&
+        document.visibilityState === 'visible' &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ) {
+        setActiveAboutSlide((current) => (current + 1) % aboutSlides.length);
+      }
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [aboutPaused]);
   useEffect(() => {
     let active = true;
     fetchTimetable().then((data) => {
@@ -101,23 +140,31 @@ export default function Home() {
       <main className="home-main">
         <section className="section about-section" id="about">
           <div className="container">
-            <div className="row align-items-center g-4 g-lg-5">
-              <div className="col-lg-6">
-                <img
-                  src="/static/oldies.png"
-                  className="feature-img"
-                  alt="Sandgate seniors enjoying time together"
-                />
+            <div className="section-title about-title">
+              <p className="section-kicker">About us</p>
+              <h2>A familiar local welcome</h2>
+            </div>
+            <div
+              className="about-carousel"
+              role="region"
+              aria-roledescription="carousel"
+              aria-label="About Sandgate Seniors"
+              onMouseEnter={() => setAboutPaused(true)}
+              onMouseLeave={() => setAboutPaused(false)}
+              onFocusCapture={() => setAboutPaused(true)}
+              onBlurCapture={() => setAboutPaused(false)}
+            >
+              <div className="about-carousel-media">
+                <img src={aboutSlide.image} className="about-carousel-image" alt={aboutSlide.alt} />
               </div>
-              <div className="col-lg-6">
-                <p className="section-kicker">About us</p>
-                <h2>Good company, regular activities, and a familiar local welcome.</h2>
-                <p className="lead">
-                  Established in the heart of Sandgate, our Senior Citizens Centre has been a place
-                  of friendship, fun, and community since 1952. We provide a supportive and
-                  inclusive space where older adults can stay active, social, and engaged through a
-                  variety of programs and services.
-                </p>
+              <div className="about-carousel-copy">
+                <div aria-live="off">
+                  <p className="carousel-count">
+                    {activeAboutSlide + 1} of {aboutSlides.length}
+                  </p>
+                  <h3>{aboutSlide.subtitle}</h3>
+                  <p>{aboutSlide.description}</p>
+                </div>
                 <div className="contact-strip">
                   <div>
                     <span>Visit</span>
@@ -130,34 +177,20 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="about-gallery" aria-labelledby="venue-title">
-              <div className="venue-gallery">
-                <figure className="venue-photo">
-                  <img
-                    src="/static/canteen.jpg"
-                    alt="The canteen and seating area inside Sandgate Senior Citizens Centre"
-                    width="4032"
-                    height="3024"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <figcaption>Our canteen</figcaption>
-                </figure>
-                <figure className="venue-photo">
-                  <img
-                    src="/static/mural.jpg"
-                    alt="Sandgate Senior Citizens Centre mural on the outside wall"
-                    width="4032"
-                    height="3024"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <figcaption>The centre mural</figcaption>
-                </figure>
-              </div>
+            <div className="about-static-slides">
+              {aboutSlides.map((slide) => (
+                <article className="about-static-card" key={slide.image}>
+                  <img src={slide.image} alt={slide.alt} loading="lazy" />
+                  <div>
+                    <h3>{slide.subtitle}</h3>
+                    <p>{slide.description}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
+        <Contact />
 
         <section className="section timetable-section" id="schedule">
           <div className="container">
@@ -206,7 +239,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <Contact />
       </main>
 
       <footer className="footer">
