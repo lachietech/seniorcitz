@@ -4,12 +4,18 @@ import { fileURLToPath } from 'node:url';
 import { cpSync, mkdirSync, writeFileSync } from 'node:fs';
 
 function staticHosting() {
-  const aliases = { '/admin/login': '/admin-login.html', '/admin/dashboard': '/admin-dashboard.html' };
-  const middleware = server => { server.middlewares.use((req, res, next) => {
-    const [path, query] = req.url.split('?');
-    if (aliases[path.replace(/\/$/, '')]) req.url = aliases[path.replace(/\/$/, '')] + (query ? `?${query}` : '');
-    next();
-  }); };
+  const aliases = {
+    '/admin/login': '/admin-login.html',
+    '/admin/dashboard': '/admin-dashboard.html',
+  };
+  const middleware = (server) => {
+    server.middlewares.use((req, res, next) => {
+      const [path, query] = req.url.split('?');
+      if (aliases[path.replace(/\/$/, '')])
+        req.url = aliases[path.replace(/\/$/, '')] + (query ? `?${query}` : '');
+      next();
+    });
+  };
   return {
     name: 'static-hosting',
     configureServer: middleware,
@@ -21,7 +27,10 @@ function staticHosting() {
         mkdirSync(`dist${route}`, { recursive: true });
         cpSync(`dist${entry}`, `dist${route}/index.html`);
       }
-      writeFileSync('dist/_redirects', '/admin/login /admin-login.html 200\n/admin/dashboard /admin-dashboard.html 200\n');
+      writeFileSync(
+        'dist/_redirects',
+        '/admin/login /admin-login.html 200\n/admin/dashboard /admin-dashboard.html 200\n',
+      );
     },
   };
 }
@@ -31,7 +40,6 @@ export default defineConfig({
   publicDir: false,
   envDir: fileURLToPath(new URL('.', import.meta.url)),
   plugins: [react(), staticHosting()],
-  server: { proxy: { '/senior-citz/api': 'http://127.0.0.1:5000' } },
   build: {
     // Preserve the original rgba/gradient values exactly for visual parity.
     cssMinify: false,
@@ -41,8 +49,8 @@ export default defineConfig({
       input: {
         home: fileURLToPath(new URL('./frontend/index.html', import.meta.url)),
         login: fileURLToPath(new URL('./frontend/admin-login.html', import.meta.url)),
-        dashboard: fileURLToPath(new URL('./frontend/admin-dashboard.html', import.meta.url))
-      }
-    }
-  }
+        dashboard: fileURLToPath(new URL('./frontend/admin-dashboard.html', import.meta.url)),
+      },
+    },
+  },
 });

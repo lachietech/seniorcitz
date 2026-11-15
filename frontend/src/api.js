@@ -14,6 +14,9 @@ export async function fetchTimetable() {
 
 export function formatPostDate(value) {
   return new Intl.DateTimeFormat('en-AU', {
-    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   }).format(new Date(value));
 }

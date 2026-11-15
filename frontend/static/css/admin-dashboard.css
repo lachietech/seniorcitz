@@ -16,10 +16,13 @@
 }
 
 body {
-  background:
-    linear-gradient(180deg, #ffffff 0, #f6f8f5 360px, #f7f3ec 100%);
+  background: linear-gradient(180deg, #ffffff 0, #f6f8f5 360px, #f7f3ec 100%);
   color: var(--ink);
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .admin-nav {
@@ -103,8 +106,7 @@ body {
 .admin-hero {
   background:
     linear-gradient(115deg, rgba(47, 111, 159, 0.1), transparent 44%),
-    linear-gradient(0deg, rgba(111, 143, 100, 0.1), rgba(255, 255, 255, 0) 64%),
-    #ffffff;
+    linear-gradient(0deg, rgba(111, 143, 100, 0.1), rgba(255, 255, 255, 0) 64%), #ffffff;
   color: var(--ink);
   padding: 42px 0 34px;
 }

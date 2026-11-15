@@ -11,6 +11,8 @@ createVisitPulse(analyticsConfig).start();
 const pathname = window.location.pathname.replace(/\/$/, '');
 const Page = ['/admin/login', '/admin-login.html'].includes(pathname)
   ? Login
-  : ['/admin/dashboard', '/admin-dashboard.html'].includes(pathname) ? Dashboard : Home;
+  : ['/admin/dashboard', '/admin-dashboard.html'].includes(pathname)
+    ? Dashboard
+    : Home;
 
 createRoot(document.getElementById('root')).render(<Page />);

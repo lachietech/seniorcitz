@@ -18,7 +18,11 @@
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family:
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .site-nav {
@@ -98,7 +102,13 @@ body {
   background:
     linear-gradient(115deg, rgba(47, 111, 159, 0.14), transparent 42%),
     linear-gradient(0deg, rgba(111, 143, 100, 0.1), rgba(255, 253, 248, 0) 56%),
-    repeating-linear-gradient(90deg, rgba(35, 49, 61, 0.035) 0, rgba(35, 49, 61, 0.035) 1px, transparent 1px, transparent 76px),
+    repeating-linear-gradient(
+      90deg,
+      rgba(35, 49, 61, 0.035) 0,
+      rgba(35, 49, 61, 0.035) 1px,
+      transparent 1px,
+      transparent 76px
+    ),
     #fffdf8;
 }
 
